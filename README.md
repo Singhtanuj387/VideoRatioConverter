@@ -83,22 +83,7 @@ Keeps the entire original video and adds a blurred, zoomed version of the video 
 - **FFmpeg not found**: Ensure FFmpeg is properly installed and added to your system PATH
 - **Conversion fails**: Check that you have write permissions to the application directories
 - **Upload issues**: Make sure your video file is less than 500MB and in a supported format
-
-## Production Deployment
-
-### Deploying on Render.com
-
-1. Create a new account on [Render.com](https://render.com) if you don't have one
-2. Fork or clone this repository to your GitHub account
-3. In your Render dashboard, click on "New" and select "Blueprint"
-4. Connect your GitHub account and select this repository
-5. Render will automatically detect the `render.yaml` configuration
-6. Click "Apply" to deploy the application
-7. Wait for the build and deployment to complete
-8. Your application will be available at the URL provided by Render
-
-Check out our live demo: [https://videoratioconverter.onrender.com/](https://videoratioconverter.onrender.com/)
-
+  
 ### Manual Deployment
 
 For manual deployment, consider using Gunicorn or uWSGI with a reverse proxy like Nginx:
