@@ -9,8 +9,18 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
-app.config['OUTPUT_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outputs')
+
+# Check if running on Render.com
+if os.environ.get('RENDER'):
+    # Use the persistent disk on Render
+    data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+    app.config['UPLOAD_FOLDER'] = os.path.join(data_dir, 'uploads')
+    app.config['OUTPUT_FOLDER'] = os.path.join(data_dir, 'outputs')
+else:
+    # Local development paths
+    app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
+    app.config['OUTPUT_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outputs')
+
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB max upload size
 
 # Create necessary directories
@@ -283,5 +293,11 @@ if __name__ == "__main__":
         print("Download FFmpeg from: https://ffmpeg.org/download.html")
         sys.exit(1)
     
-    # Start the Flask app
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Check if running on Render.com
+    if os.environ.get('RENDER'):
+        # Production mode
+        port = int(os.environ.get('PORT', 10000))
+        app.run(debug=False, host='0.0.0.0', port=port)
+    else:
+        # Development mode
+        app.run(debug=True, host='0.0.0.0', port=5000)

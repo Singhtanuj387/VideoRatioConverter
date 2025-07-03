@@ -84,7 +84,20 @@ Keeps the entire original video and adds a blurred, zoomed version of the video 
 
 ## Production Deployment
 
-For production deployment, consider using Gunicorn or uWSGI with a reverse proxy like Nginx:
+### Deploying on Render.com
+
+1. Create a new account on [Render.com](https://render.com) if you don't have one
+2. Fork or clone this repository to your GitHub account
+3. In your Render dashboard, click on "New" and select "Blueprint"
+4. Connect your GitHub account and select this repository
+5. Render will automatically detect the `render.yaml` configuration
+6. Click "Apply" to deploy the application
+7. Wait for the build and deployment to complete
+8. Your application will be available at the URL provided by Render
+
+### Manual Deployment
+
+For manual deployment, consider using Gunicorn or uWSGI with a reverse proxy like Nginx:
 
 ```
 gunicorn -w 4 -b 127.0.0.1:5000 app:app
